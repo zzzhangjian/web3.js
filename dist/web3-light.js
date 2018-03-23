@@ -2606,7 +2606,7 @@ var properties = function () {
         }),
         new Property({
             name: 'version.ethereum',
-            getter: 'eth_protocolVersion',
+            getter: 'hpb_protocolVersion',
             inputFormatter: utils.toDecimal
         }),
         new Property({
@@ -4200,7 +4200,7 @@ SolidityFunction.prototype.request = function () {
     var format = this.unpackOutput.bind(this);
 
     return {
-        method: this._constant ? 'eth_call' : 'eth_sendTransaction',
+        method: this._constant ? 'hpb_call' : 'hpb_sendTransaction',
         callback: callback,
         params: [payload],
         format: format
@@ -6607,23 +6607,23 @@ var pollSyncing = function(self) {
 
         self.callbacks.forEach(function (callback) {
             if (self.lastSyncState !== sync) {
-                
+
                 // call the callback with true first so the app can stop anything, before receiving the sync data
                 if(!self.lastSyncState && utils.isObject(sync))
                     callback(null, true);
-                
+
                 // call on the next CPU cycle, so the actions of the sync stop can be processes first
                 setTimeout(function() {
                     callback(null, sync);
                 }, 0);
-                
+
                 self.lastSyncState = sync;
             }
         });
     };
 
     self.requestManager.startPolling({
-        method: 'eth_syncing',
+        method: 'hpb_syncing',
         params: [],
     }, self.pollId, onMessage, self.stopWatching.bind(self));
 
