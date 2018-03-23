@@ -5504,7 +5504,7 @@ Eth.prototype.contract = function (abi) {
 };
 
 Eth.prototype.filter = function (options, callback, filterCreationErrorCallback) {
-    return new Filter(options, 'eth', this._requestManager, watches.hpb(), formatters.outputLogFormatter, callback, filterCreationErrorCallback);
+    return new Filter(options, 'eth', this._requestManager, watches.eth(), formatters.outputLogFormatter, callback, filterCreationErrorCallback);
 };
 
 Eth.prototype.namereg = function () {
@@ -6019,13 +6019,13 @@ var eth = function () {
             case 'latest':
                 args.shift();
                 this.params = 0;
-                return 'eth_newBlockFilter';
+                return 'hpb_newBlockFilter';
             case 'pending':
                 args.shift();
                 this.params = 0;
-                return 'eth_newPendingTransactionFilter';
+                return 'hpb_newPendingTransactionFilter';
             default:
-                return 'eth_newFilter';
+                return 'hpb_newFilter';
         }
     };
 
@@ -6037,19 +6037,19 @@ var eth = function () {
 
     var uninstallFilter = new Method({
         name: 'uninstallFilter',
-        call: 'eth_uninstallFilter',
+        call: 'hpb_uninstallFilter',
         params: 1
     });
 
     var getLogs = new Method({
         name: 'getLogs',
-        call: 'eth_getFilterLogs',
+        call: 'hpb_getFilterLogs',
         params: 1
     });
 
     var poll = new Method({
         name: 'poll',
-        call: 'eth_getFilterChanges',
+        call: 'hpb_getFilterChanges',
         params: 1
     });
 
